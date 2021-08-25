@@ -5,6 +5,7 @@ from django.contrib import auth, messages
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from baskets.models import Basket
 
+
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -46,7 +47,9 @@ def profile(request):
         form = UserProfileForm(instance=user)
     context = {'title': 'GeekShop- Личный кабинет',
                'form': form,
-               'baskets': Basket.objects.filter(user=user)}
+               'baskets': Basket.objects.filter(user=user),
+               'total_quantity':Basket.total_quantity(user),
+               'total_sum': Basket.total_sum(user)}
     return render(request, 'users/profile.html', context)
 
 
