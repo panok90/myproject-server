@@ -22,4 +22,4 @@ class Basket(models.Model):
 
     @staticmethod
     def total_sum(user):
-        return sum(basket.quantity * basket.product.price for basket in Basket.objects.filter(user=user))
+        return sum(basket.sum() for basket in Basket.objects.filter(user=user))
