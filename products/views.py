@@ -21,10 +21,11 @@ class ProductListView(ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        if self.kwargs['category_id'] is not None:
-            return Product.objects.filter(category_id=self.kwargs['category_id'])
-        else:
-            return Product.objects.all()
+        result = super(ProductListView, self).get_queryset()
+        if len(self.kwargs):
+            category = self.kwargs['category_id']
+            result = Product.objects.filter(category_id=category)
+        return result
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
